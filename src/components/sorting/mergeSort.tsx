@@ -12,7 +12,7 @@ function Tiles(props:{arr:number[], active:number}){
     console.log(props.active);
     let array = [];
     for (let i = 0; i < props.arr.length; i++){
-      array.push(<div className= "array-bar" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
+        array.push(<div className= "array-bar" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
     }
     return <div className ="array-container">
               {array}
@@ -20,11 +20,11 @@ function Tiles(props:{arr:number[], active:number}){
   }
 
 
-function BubbleSort() {
+function MergeSort() {
     const [on,setOn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const isOver = useAppSelector(state => state.bubbleSort.isOver);
-    const array = useAppSelector(state => state.bubbleSort.arr);
+    const isOver = useAppSelector(state => state.mergeSort.isOver);
+    const array = useAppSelector(state => state.mergeSort.arr);
     const idx = useAppSelector(state => state.bubbleSort.idx);
     const [msg,setMsg] = useState<String>("");
     const [visible,setVisible] = useState(false);
@@ -88,4 +88,4 @@ function BubbleSort() {
     );
 }
   
-export default BubbleSort;
+export default MergeSort;

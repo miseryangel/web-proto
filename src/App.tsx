@@ -1,12 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import BubbleSort from './components/sorting/bubbleSort';
+import { BrowserRouter } from 'react-router-dom';
+import Header from './components/Header';
+import Main from './components/Main';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
     <div className="App">
-      <BubbleSort/>
+      <BrowserRouter>
+        <Header/>
+        <Main/>
+      </BrowserRouter>
     </div>
   );
 }

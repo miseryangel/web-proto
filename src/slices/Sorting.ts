@@ -1,22 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { randomArray } from './bricks/arrayGenerator';
+import { stackGenerator,subSort } from './bricks/mergeHelper';
 
-// From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-function randomIntFromInterval(min:number, max:number) {
-    // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-  
-const randomArray = (len:number) =>{
-    const arr = [];
-    for (let i = 0; i < len; i++){
-        arr[i] = randomIntFromInterval(1,100);
-    }
-    return arr;
-}
+const initialLength = 100;
 
-const initialLength = 100, maxLength = 200;
-
-export const sortingSlice = createSlice({
+export const bubbleSortingSlice = createSlice({
     name: 'sorting',
     initialState: {
         arr:randomArray(initialLength),
@@ -73,12 +61,69 @@ export const sortingSlice = createSlice({
 })
 
 
+const mergeStart = randomArray(initialLength);
+const stack = stackGenerator(initialLength);
+export const mergeSortingSlice = createSlice({
+    name: 'merge sort',
+    initialState: {
+        arr:mergeStart,
+        tmp:mergeStart,
+        stack:stack,
+        len:initialLength,
+        round:stack.length-1,
+        idx: stack[stack.length-1][0],
+        isOver:false,
+    },
+    reducers: {
+        reset: state =>{
+            state.arr = randomArray(state.len);
+            state.tmp = state.arr;
+            state.stack = stackGenerator(state.len);
+            state.round = state.stack.length-1;
+            state.idx = state.stack[state.stack.length-1][0];
+            state.isOver = false;
+        },
+        resize:{
+            reducer(state,action:PayloadAction<number>){
+                state.len = action.payload;
+            },
+            prepare(payload:number){
+                return {payload};
+            },
+        },
+        forward:(state) =>{
+            if (!state.isOver){
+                if (state.idx === state.stack[state.round][0]){
+                    state.tmp = subSort(state.tmp,state.stack[state.round][0],state.stack[state.round][1]);
+                }
+                if (state.idx === state.stack[state.round][1]){
+                    state.round--;
+                    if (state.round === -1){
+                        state.isOver = true;
+                        return;
+                    }
+                    state.idx = state.stack[state.round][0];
+                }else{
+                    state.arr[state.idx] = state.tmp[state.idx];
+                }
+            }
+        }
+    },
+})
+
 export const {
     reset:bubbleReset,
     resize:bubbleResize,
     forward:bubbleForward,
-} = sortingSlice.actions;
+} = bubbleSortingSlice.actions;
+
+export const {
+    reset:mergeReset,
+    resize:mergeResize,
+    forward:mergeForward,
+} = mergeSortingSlice.actions;
 
 export const sortingReducers ={
-    sortingReducer: sortingSlice.reducer,
+    bubbleSortingReducer: bubbleSortingSlice.reducer,
+    mergeSortingReducer: mergeSortingSlice.reducer,
 }
