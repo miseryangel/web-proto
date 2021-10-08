@@ -7,6 +7,7 @@ import {
     avlAddNode,
     avlDeleteNode,
 } from '../../slices/Tree';
+import { traverseHelper } from '../bits/TraverseHelper';
 
 function ConditionalTreeRenderer(props:{root:AVLNode | null, active:number}){
     if (props.root === null){
@@ -30,10 +31,23 @@ const AVL = () =>{
     const [nodeVal,setNodeVal] = useState(-1);
     const [msg,setMsg] = useState<String>("");
     const [visible,setVisible] = useState(false);
-    const [traverseChoice,setTraverse] = useState(1);
+    const [traverseChoice,setTraverseChoice] = useState(1);
+    const [idx,setIdx] = useState(0);
+    const [on,setOn] = useState(false);
+    const [traverse,setTraverse] = useState<number[]>([]);
     useEffect(() =>{
-        console.log(tree);
-    },[visible])
+        let interval:ReturnType<typeof setInterval>|null = null;
+        if (on && idx < traverse.length){
+            console.log(idx);
+            interval = setInterval(() =>{
+                setIdx(idx+1);
+            },200);
+        }else{
+            setOn(false);
+            clearInterval(interval!);
+        }
+        return () =>clearInterval(interval!);
+    },[visible,on,traverse,idx])
 
     const msgHandler = (message:String) =>{
         setVisible(true);
@@ -42,43 +56,13 @@ const AVL = () =>{
         return () =>clearInterval(interval);
     }
 
-    const inOrder = (node:AVLNode|null) =>{
-        if (node === null) return;
-        inOrder(node.left);
-        let interval = setInterval(() => setVal(node.val),500);
-        inOrder(node.right);
-        return () =>clearInterval(interval);
-    }
-
-    const preOrder = (node:AVLNode|null) =>{
-        if (node === null) return;
-        let interval = setInterval(() => setVal(node.val),500);
-        preOrder(node.left);
-        preOrder(node.right);
-        return () =>clearInterval(interval);
-    }
-
-    const postOrder = (node:AVLNode|null) =>{
-        if (node === null) return;
-        postOrder(node.left);
-        postOrder(node.right);
-        let interval = setInterval(() => setVal(node.val),500);
-        return () =>clearInterval(interval);
-    }
-
     const traverseHandler = () =>{
-        switch(traverseChoice){
-          case 1:
-            inOrder(root);
-            break;
-          case 2:
-            preOrder(root);
-            break;
-          case 3:
-            postOrder(root);
-            break;
-        }
-        setVal(-1);
+        const tmp:number[] = [];
+        traverseHelper(root,tmp,traverseChoice);
+        setTraverse(tmp);
+        setIdx(0);
+        setOn(true);
+        console.log(on);
     }
     const dfs = (node: AVLNode|null, value:number):number =>{
         if (node === null) return 0;
@@ -93,7 +77,7 @@ const AVL = () =>{
             <Grid container spacing = {3} justify="center">
                 <Grid item xs = {8} justify="center"> 
                     <Typography variant="h4">AVL Tree</Typography>
-                    <ConditionalTreeRenderer root = {root} active = {val} />
+                    <ConditionalTreeRenderer root = {root} active = {idx >= traverse.length?-1e4:traverse[idx]} />
                 </Grid>
                 <Grid item xs = {3}>
                     <ButtonGroup
@@ -147,7 +131,7 @@ const AVL = () =>{
                             type="number"
                             onChange = {(e) =>{
                               const op = e.target.value as number;
-                              setTraverse(op);
+                              setTraverseChoice(op);
                             }}
                             >
                             <MenuItem value={1}>inOrder</MenuItem>

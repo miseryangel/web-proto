@@ -83,6 +83,12 @@
   margin: 0 1px;
   background-color:#aad1a5
 }
+.array-bar-active{
+  width: 2px;
+  display: inline-block;
+  margin: 0 1px;
+  background-color:#e73922
+}
   /* tree */
 .tree-node{
   border-radius: 50%;

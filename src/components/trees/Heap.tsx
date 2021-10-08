@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { Box, Button, Grid, ButtonGroup, TextField, Typography, FormControl, Select, MenuItem } from '@material-ui/core';
+import { Box, Button, Grid, ButtonGroup, TextField, Typography, FormControl, Select, MenuItem, Slider } from '@material-ui/core';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import { useHistory } from 'react-router-dom';
 import { arrayStyles } from '../styles/arrayStyle';
@@ -37,12 +37,23 @@ function Heap(){
     const [visible,setVisible] = useState(false);
     const [order,setOrder] = useState(0);
     const [trans,setTrans] = useState("");
+    const [on,setOn] = useState(false);
+    const [speed,setSpeed] = useState(200);
     const history = useHistory();
     const classes = arrayStyles();
 
     useEffect(() =>{
-
-    },[visible,hLen,arr,sorted])
+      let interval:ReturnType<typeof setInterval>|null = null;
+      if (on && hLen > 0){
+        interval = setInterval(()=>{
+          removeHandler();
+        },speed);
+      }else{
+        setOn(false);
+        clearInterval(interval!);
+      }
+      return () =>clearInterval(interval!);
+    },[visible,hLen,arr,sorted,on])
 
     const msgHandler = (message:String) =>{
       setVisible(true);
@@ -58,6 +69,15 @@ function Heap(){
     const transHandler = (e:React.ChangeEvent<{value:unknown}>) =>{
       const choice = e.target.value as string;
       setTrans(choice);
+    }
+    const removeHandler = () => {
+      const tmp = [...sorted];
+      if (tmp.length >= 20){
+        tmp.shift();
+      }
+      tmp.push(arr[0]);
+      setSorted(tmp);
+      dispatch(heapRemove());
     }
 
     const maximize = () =>{
@@ -161,15 +181,26 @@ function Heap(){
                         dispatch(heapReset(order));
                       }}>Refresh</Button>
                       <Button onClick = {() => dispatch(heapAdd(val))} >Add</Button>
-                      <Button onClick = {() => {
-                        const tmp = [...sorted];
-                        if (tmp.length >= 20){
-                          tmp.shift();
-                        }
-                        tmp.push(arr[0]);
-                        setSorted(tmp);
-                        dispatch(heapRemove());
-                      }} disabled={arr.length === 0}>Remove</Button>
+                      <Button onClick = {removeHandler} disabled={arr.length === 0}>Remove</Button>
+                    </ButtonGroup>
+                    <ButtonGroup
+                        orientation="vertical"
+                        aria-label="vertical outlined button group"
+                        color="primary"
+                    >
+                      <Button onClick = {() => setOn(true)} disabled={arr.length === 0}>HeapSort</Button>
+                      <Slider
+                        aria-label="Speed"
+                        defaultValue={200}
+                        valueLabelDisplay="auto"
+                        step={2}
+                        min={100}
+                        max={300}
+                        onChange={ (e, val) => {
+                          const spd = val as number;
+                          setSpeed(spd);
+                        }}
+                      />
                     </ButtonGroup>
                 </Grid>
                 {visible && <Typography color="secondary" variant="h6">{msg}</Typography>}

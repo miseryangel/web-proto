@@ -92,9 +92,12 @@ export const mergeSortingSlice = createSlice({
             },
         },
         forward:(state) =>{
+            console.log("round is ",state.round);
+            console.log("index is ",state.idx);
             if (!state.isOver){
                 if (state.idx === state.stack[state.round][0]){
-                    state.tmp = subSort(state.tmp,state.stack[state.round][0],state.stack[state.round][1]);
+                    console.log("hiii");
+                    state.tmp = subSort([...state.tmp],state.stack[state.round][0],state.stack[state.round][1]);
                 }
                 if (state.idx === state.stack[state.round][1]){
                     state.round--;
@@ -105,6 +108,7 @@ export const mergeSortingSlice = createSlice({
                     state.idx = state.stack[state.round][0];
                 }else{
                     state.arr[state.idx] = state.tmp[state.idx];
+                    state.idx++;
                 }
             }
         }

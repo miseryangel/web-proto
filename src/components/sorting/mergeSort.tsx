@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Grid, Button, TextField, ButtonGroup, FormControl, Select, MenuItem } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-    bubbleReset,
-    bubbleResize,
-    bubbleForward 
+    mergeReset,
+    mergeResize,
+    mergeForward 
 } from '../../slices/Sorting';
 
-function Tiles(props:{arr:number[], active:number}){
+function Tiles(props:{arr:number[], active:number,margin:number[]}){
     console.log(props.arr);
     console.log(props.active);
     let array = [];
     for (let i = 0; i < props.arr.length; i++){
-        array.push(<div className= "array-bar" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
+        if (props.active === i){
+          array.push(<div className= "array-bar-active" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
+        }else if (i>= props.margin[0] && i<= props.margin[1]){
+          array.push(<div className= "array-bar-merge" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
+        }else{
+          array.push(<div className= "array-bar" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
+        }
     }
     return <div className ="array-container">
               {array}
@@ -25,7 +31,11 @@ function MergeSort() {
     const dispatch = useAppDispatch();
     const isOver = useAppSelector(state => state.mergeSort.isOver);
     const array = useAppSelector(state => state.mergeSort.arr);
-    const idx = useAppSelector(state => state.bubbleSort.idx);
+    const idx = useAppSelector(state => state.mergeSort.idx);
+    const round = useAppSelector(state => state.mergeSort.round);
+    const margin = useAppSelector(state =>state.mergeSort.stack[round]);
+    const [index,setIndex] = useState(idx);
+    const [over,setOver] = useState<boolean>(isOver);
     const [msg,setMsg] = useState<String>("");
     const [visible,setVisible] = useState(false);
 
@@ -33,13 +43,15 @@ function MergeSort() {
         let interval:ReturnType<typeof setInterval>|null = null;
         if (on && !isOver){
         interval = setInterval(()=>{
-            dispatch(bubbleForward())
+            dispatch(mergeForward());
+            setIndex(idx);
+            if (isOver) setOver(true);
         },10);
         }else{
         clearInterval(interval!);
         }
         return () =>clearInterval(interval!);
-    },[on,isOver]);
+    },[on,over,idx]);
 
     const msgHandler = (message:String) =>{
         setVisible(true);
@@ -50,8 +62,8 @@ function MergeSort() {
     return (
         <Grid container spacing = {3} justify="center">
             <Grid item xs = {10}>
-                <Typography variant="h4">BubbleSort</Typography>
-                <Tiles arr = {array} active={idx}/>
+                <Typography variant="h4">mergeSort</Typography>
+                <Tiles arr = {array} active={index} margin = {margin}/>
             </Grid>
             <Grid item xs = {10}>
                 <Button onClick = {() => setOn(!on)}>{on?`pause`:`start`}</Button>
@@ -73,8 +85,8 @@ function MergeSort() {
                 onChange={(e)=>{
                   const newLen = +e.target.value;
                   if (newLen >= 50  && newLen <= 200){
-                    dispatch(bubbleResize(newLen));
-                    dispatch(bubbleReset());
+                    dispatch(mergeResize(newLen));
+                    dispatch(mergeReset());
                   }else if (newLen < 0){
                     msgHandler("invalid length !");
                   }else{

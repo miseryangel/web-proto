@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Box, Grid, Button, TextField, ButtonGroup, FormControl, Select, MenuItem } from '@material-ui/core';
+import { Typography, Box, Grid, Button, TextField, ButtonGroup, FormControl, Select, MenuItem, Slider } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useHistory } from 'react-router-dom';
 import {
@@ -59,6 +59,7 @@ function Array(){
     const [trans,setTrans] = useState("");
     const history = useHistory();
     const classes = arrayStyles();
+    const [speed,setSpeed] = useState(200);
 
     useEffect(() =>{
       let interval:ReturnType<typeof setInterval>|null = null;
@@ -68,12 +69,12 @@ function Array(){
           if (active >= len || active < 0){
             setOn(false);
           }
-        },200);
+        },speed);
       }else{
         clearInterval(interval!);
       }
       return () =>clearInterval(interval!);
-    },[visible,value,on,active,array,arrLen])
+    },[visible,value,on,active,array,arrLen,speed])
 
     const msgHandler = (message:String) =>{
       setVisible(true);
@@ -320,6 +321,18 @@ function Array(){
             </Select>
             </FormControl>
             <Button onClick= {() => dispatch(arraySort(order))}>Sort</Button>
+            <Slider
+              aria-label="Speed"
+              defaultValue={200}
+              valueLabelDisplay="auto"
+              step={2}
+              min={100}
+              max={300}
+              onChange={ (e, val) => {
+                const spd = val as number;
+                setSpeed(spd);
+              }}
+            />
           </ButtonGroup>
           <ButtonGroup
             orientation="vertical"
