@@ -8,20 +8,9 @@ export const Tree = (props:{root:Nodewise,active:number}) =>{
     const dfs = (node:Nodewise|null)=>{
         if (node === null) return <Card></Card>;
         const left = dfs(node.left), right = dfs(node.right);
-        if (node.val === props.active){
-            return (
-                <Grid container justify="center">
-                    <Paper className = {classes.active}>{node.val}</Paper>
-                    <Grid container justify="center">
-                        <Grid item xs = {6}>{left}</Grid>
-                        <Grid item xs = {6}>{right}</Grid>
-                    </Grid>
-                </Grid>
-            )
-        }
         return (
             <Grid container justify="center">
-                <Paper className = {classes.node}>{node.val}</Paper>
+                <Paper className = {node.val === props.active?classes.active:classes.node}>{node.val}</Paper>
                 <Grid container justify="center">
                     <Grid item xs = {6}>{left}</Grid>
                     <Grid item xs = {6}>{right}</Grid>

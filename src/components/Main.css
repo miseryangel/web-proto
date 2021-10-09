@@ -77,6 +77,13 @@
 }
 
   /* sorting */
+
+.array-container {
+  position: absolute;
+  left: 300px;
+  /* top: 100px; */
+}
+
 .array-bar {
   width: 2px;
   display: inline-block;
@@ -96,6 +103,8 @@
   margin: 0 1px;
   background-color:#50e722
 }
+
+
   /* tree */
 .tree-node{
   border-radius: 50%;
@@ -173,11 +182,7 @@
     }
   
     
-    .array-container {
-      position: absolute;
-      left: 100px;
-      /* top: 100px; */
-    }
+    
     
     
     

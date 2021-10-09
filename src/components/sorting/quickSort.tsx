@@ -64,62 +64,62 @@ function QuickSort() {
                 <Tiles arr = {array} pivots={!on||over?[]:pivots}/>
             </Grid>
             <Grid item xs = {10}>
-            <ButtonGroup
-              orientation="vertical"
-              aria-label="vertical outlined button group"
-              color="primary"
-            >
-                <Button onClick = {() => {
-                  if(over){
-                    setOver(false);
-                    dispatch(quickReset());
-                  }else{
-                    setOn(!on);
-                  }
-                }}>{over?`reset`:on?`pause`:`start`}</Button>
-                <TextField
-                className="outlined-number"
-                label="Length"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  inputProps: { 
-                      max: 200, min: 50 
-                  }
-                }}
-                defaultValue = {100}
-                variant="outlined"
-                size="small"
-                onChange={(e)=>{
-                  const newLen = +e.target.value;
-                  setOn(false);
-                  if (newLen >= 50  && newLen <= 200){
-                    dispatch(quickResize(newLen));
-                    dispatch(quickReset());
-                  }else if (newLen < 0){
-                    msgHandler("invalid length !");
-                  }else{
-                    msgHandler("value out of range !");
-                  }
-                }}
-                />
-                <Slider
-                  aria-label="Speed"
-                  defaultValue={speed}
-                  valueLabelDisplay="auto"
-                  step={1}
-                  min={5}
-                  max={30}
-                  onChange={ (e, val) => {
-                    const spd = val as number;
-                    setSpeed(spd);
-                  }}
-                />
-              </ButtonGroup>
-            </Grid>
-            {visible && <Typography color="secondary" variant="h6">{msg}</Typography>}
+                <Box pt={20} pl={70}>
+                    <ButtonGroup
+                        orientation="vertical"
+                        aria-label="vertical outlined button group"
+                        color="primary"
+                    >
+                        <Button variant = "contained" onClick = {() => {
+                            setOver(false);
+                            dispatch(quickReset());
+                        }}>reset</Button>
+                        <Button onClick = {() => setOn(!on)} disabled={over}>{on?`pause`:`start`}</Button>
+                        <TextField
+                        className="outlined-number"
+                        label="Length"
+                        type="number"
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        InputProps={{
+                        inputProps: { 
+                            max: 200, min: 50 
+                        }
+                        }}
+                        defaultValue = {100}
+                        variant="outlined"
+                        size="small"
+                        onChange={(e)=>{
+                        const newLen = +e.target.value;
+                        setOn(false);
+                        if (newLen >= 50  && newLen <= 200){
+                            dispatch(quickResize(newLen));
+                            dispatch(quickReset());
+                        }else if (newLen < 0){
+                            msgHandler("invalid length !");
+                        }else{
+                            msgHandler("value out of range !");
+                        }
+                        }}
+                        />
+                        <Slider
+                        aria-label="Speed"
+                        defaultValue={speed}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={5}
+                        max={30}
+                        onChange={ (e, val) => {
+                            const spd = val as number;
+                            setSpeed(spd);
+                        }}
+                        />
+                    </ButtonGroup>
+                    {visible && <Typography color="secondary" variant="h6">{msg}</Typography>}
+
+                    </Box>
+                </Grid>
         </Grid>
     );
 }

@@ -167,8 +167,8 @@ export const quickSortingSlice = createSlice({
                 }
                 const nxtQueue = [] as number[][];
                 const stack = [...state.stack];
-                stack.map((sd) =>{
-                    console.log("this is undefined",sd);
+                for (let i = 0; i < stack.length; i++){
+                    const sd = stack[i];
                     let nxt = sd[0], cur = sd[1], low = sd[2], high = sd[3], ele = sd[4];
                     if (high === cur){
                         const tmp = state.arr[nxt+1];
@@ -184,36 +184,14 @@ export const quickSortingSlice = createSlice({
                     }else{
                         if (state.arr[cur] <= ele){
                             nxt++;
-                            const tmp = state.stack[nxt];
-                            state.stack[nxt] = state.stack[cur];
-                            state.stack[cur] = tmp;
+                            const tmp = state.arr[nxt];
+                            state.arr[nxt] = state.arr[cur];
+                            state.arr[cur] = tmp;
                         }
                         nxtQueue.push([nxt,++cur,low,high,ele]);
                     }
-                    return 0;
-                })
-                // for (let i = 0; i < state.stack.length; i++){
-                //     console.log("this is undefined",state.stack[i]);
-                //     let sd = [...state.stack[i]], nxt = sd[0], cur = sd[1], low = sd[2], high = sd[3], ele = sd[4];
-                //     if (high === cur){
-                //         state.arr[nxt+1] = ele;
-                //         if (nxt > low){
-                //             nxtQueue.push([low-1,low,low,nxt,state.arr[nxt]]);
-                //         }
-                //         if (nxt + 2 < high){
-                //             nxtQueue.push([nxt+1,nxt+2,nxt+2,high,state.arr[high]]);
-                //         }
-                //         state.pivots.push(nxt+1);
-                //     }else{
-                //         if (state.arr[cur] <= ele){
-                //             nxt++;
-                //             const tmp = state.stack[nxt];
-                //             state.stack[nxt] = state.stack[cur];
-                //             state.stack[cur] = tmp;
-                //         }
-                //         nxtQueue.push([nxt,++cur,low,high,ele]);
-                //     }
-                // }
+                }
+                console.log("this is the next queue",nxtQueue);
                 state.stack = [...nxtQueue];
             }
         }
