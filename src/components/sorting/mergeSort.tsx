@@ -4,12 +4,15 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
     mergeReset,
     mergeResize,
-    mergeForward 
+    mergeForward,
+    mergeUpdate,
 } from '../../slices/Sorting';
+import { randomArray } from '../../slices/bricks/arrayGenerator';
+import { stackGenerator,subSort } from '../../slices/bricks/mergeHelper';
 
 function Tiles(props:{arr:number[], active:number,margin:number[]}){
-    console.log(props.arr);
     console.log(props.active);
+    console.log("now in tiles the array is",props.arr);
     let array = [];
     for (let i = 0; i < props.arr.length; i++){
         if (props.active === i){
@@ -27,13 +30,15 @@ function Tiles(props:{arr:number[], active:number,margin:number[]}){
 
 
 function MergeSort() {
-    const [on,setOn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+    const [on,setOn] = useState<boolean>(false);
     const isOver = useAppSelector(state => state.mergeSort.isOver);
     const array = useAppSelector(state => state.mergeSort.arr);
+    const tmp = useAppSelector(state => state.mergeSort.tmp);
     const idx = useAppSelector(state => state.mergeSort.idx);
     const round = useAppSelector(state => state.mergeSort.round);
-    const margin = useAppSelector(state =>state.mergeSort.stack[round]);
+    const [margin,setMargin] = useState<number[]>([-1,-1]);
+    const stack = useAppSelector(state =>state.mergeSort.stack);
     const [index,setIndex] = useState(idx);
     const [over,setOver] = useState<boolean>(isOver);
     const [msg,setMsg] = useState<String>("");
@@ -41,17 +46,24 @@ function MergeSort() {
 
     useEffect(()=>{
         let interval:ReturnType<typeof setInterval>|null = null;
-        if (on && !isOver){
+        if (on && !over){
         interval = setInterval(()=>{
-            dispatch(mergeForward());
             setIndex(idx);
+            if (round >= 0){
+              setMargin(stack[round]);
+              if (idx === stack[round][0]){
+                dispatch(mergeUpdate([...subSort(tmp,stack[round][0],stack[round][1])]));
+              }
+              dispatch(mergeForward());
+              if (isOver) setOver(true);
+            } 
             if (isOver) setOver(true);
         },10);
         }else{
         clearInterval(interval!);
         }
         return () =>clearInterval(interval!);
-    },[on,over,idx]);
+    },[on,over,idx,margin]);
 
     const msgHandler = (message:String) =>{
         setVisible(true);
@@ -63,7 +75,8 @@ function MergeSort() {
         <Grid container spacing = {3} justify="center">
             <Grid item xs = {10}>
                 <Typography variant="h4">mergeSort</Typography>
-                <Tiles arr = {array} active={index} margin = {margin}/>
+                <Tiles arr = {array} active={on?index:-1} margin = {margin}/>
+                <Tiles arr = {tmp} active={on&&!isOver?index:-1} margin = {margin}/>
             </Grid>
             <Grid item xs = {10}>
                 <Button onClick = {() => setOn(!on)}>{on?`pause`:`start`}</Button>
@@ -86,7 +99,7 @@ function MergeSort() {
                   const newLen = +e.target.value;
                   if (newLen >= 50  && newLen <= 200){
                     dispatch(mergeResize(newLen));
-                    dispatch(mergeReset());
+                    dispatch(mergeReset({arr:randomArray(newLen),stack:stackGenerator(newLen)}));
                   }else if (newLen < 0){
                     msgHandler("invalid length !");
                   }else{

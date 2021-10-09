@@ -15,6 +15,8 @@ import BubbleSort from './sorting/bubbleSort';
 import MergeSort from './sorting/mergeSort';
 import Heap from './trees/Heap';
 import Backtracking from './pathfinding/Backtracking';
+import QuickSort from './sorting/quickSort';
+import RadixSort from './sorting/radixSort';
 
 
 
@@ -79,6 +81,18 @@ function Main (){
             <Route path="/Sorting/MergeSort" 
                 component={() => 
                   <MergeSort
+                  />
+                } 
+            />
+            <Route path="/Sorting/QuickSort" 
+                component={() => 
+                  <QuickSort
+                  />
+                } 
+            />
+            <Route path="/Sorting/RadixSort" 
+                component={() => 
+                  <RadixSort
                   />
                 } 
             />

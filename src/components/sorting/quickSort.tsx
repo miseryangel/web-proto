@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Grid, Button, TextField, Slider, ButtonGroup, FormControl, Select, MenuItem } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-    bubbleReset,
-    bubbleResize,
-    bubbleForward 
+    quickReset,
+    quickResize,
+    quickForward 
 } from '../../slices/Sorting';
 
-function Tiles(props:{arr:number[], active:number}){
+function Tiles(props:{arr:number[], pivots:number[]}){
     console.log(props.arr);
-    console.log(props.active);
     let array = [];
     for (let i = 0; i < props.arr.length; i++){
-      if (i === props.active){
+      if (props.pivots.includes(i)){
         array.push(<div className= "array-bar-active" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
       }else{
         array.push(<div className= "array-bar" style={{height:`${props.arr[i]*400/props.arr.length}px`}}> </div>);
@@ -24,15 +23,14 @@ function Tiles(props:{arr:number[], active:number}){
   }
 
 
-function BubbleSort() {
+function QuickSort() {
     // CHANGE ISoVER TO HOOKS
     const [on,setOn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const isOver = useAppSelector(state => state.bubbleSort.isOver);
-    const array = useAppSelector(state => state.bubbleSort.arr);
+    const isOver = useAppSelector(state => state.quickSort.isOver);
+    const array = useAppSelector(state => state.quickSort.arr);
     const [over,setOver] =  useState<boolean>(isOver);
-    const idx = useAppSelector(state => state.bubbleSort.idx);
-    const [index,setIndex] = useState<number>(idx);
+    const pivots = useAppSelector(state => state.quickSort.pivots);
     const [msg,setMsg] = useState<String>("");
     const [visible,setVisible] = useState(false);
     const [speed,setSpeed] = useState(10);
@@ -41,8 +39,7 @@ function BubbleSort() {
         let interval:ReturnType<typeof setInterval>|null = null;
         if (on && !over){
           interval = setInterval(()=>{
-              dispatch(bubbleForward());
-              setIndex(idx);
+              dispatch(quickForward());
               if (isOver){
                 setOver(true);
                 setOn(false);
@@ -52,7 +49,7 @@ function BubbleSort() {
         clearInterval(interval!);
         }
         return () =>clearInterval(interval!);
-    },[on,over,idx,isOver]);
+    },[on,over]);
 
     const msgHandler = (message:String) =>{
         setVisible(true);
@@ -63,8 +60,8 @@ function BubbleSort() {
     return (
         <Grid container spacing = {3} justify="center">
             <Grid item xs = {10}>
-                <Typography variant="h4">BubbleSort</Typography>
-                <Tiles arr = {array} active={!on||over?-1:index+1}/>
+                <Typography variant="h4">QuickSort</Typography>
+                <Tiles arr = {array} pivots={!on||over?[]:pivots}/>
             </Grid>
             <Grid item xs = {10}>
             <ButtonGroup
@@ -75,7 +72,7 @@ function BubbleSort() {
                 <Button onClick = {() => {
                   if(over){
                     setOver(false);
-                    dispatch(bubbleReset());
+                    dispatch(quickReset());
                   }else{
                     setOn(!on);
                   }
@@ -99,8 +96,8 @@ function BubbleSort() {
                   const newLen = +e.target.value;
                   setOn(false);
                   if (newLen >= 50  && newLen <= 200){
-                    dispatch(bubbleResize(newLen));
-                    dispatch(bubbleReset());
+                    dispatch(quickResize(newLen));
+                    dispatch(quickReset());
                   }else if (newLen < 0){
                     msgHandler("invalid length !");
                   }else{
@@ -127,4 +124,4 @@ function BubbleSort() {
     );
 }
   
-export default BubbleSort;
+export default QuickSort;

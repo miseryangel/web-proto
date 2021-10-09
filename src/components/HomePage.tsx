@@ -26,6 +26,8 @@ const HomePage = () =>{
           <Link href="/AVLTree" >AVLTree</Link>
           <Link href="/Sorting/BubbleSort" >BubbleSort</Link>
           <Link href="/Sorting/MergeSort" >MergeSort</Link>
+          <Link href="/Sorting/QuickSort" >QuickSort</Link>
+          <Link href="/Sorting/RadixSort" >RadixSort</Link>
           <Link href="/Heap" >Heap</Link>
           <Link href="/Backtracking" >Backtracking</Link>
         </Paper>

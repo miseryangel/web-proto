@@ -31,4 +31,17 @@ export const arrayStyles = makeStyles((theme:Theme) => ({
       width:theme.spacing(3),
       height:theme.spacing(3),
     },
+    radix: {
+      display: "flex",
+      flexWrap: "wrap",
+      outline:"2px solid white",
+      "& > *": {
+        margin: theme.spacing(0.1),
+        width: theme.spacing(5),
+        height: theme.spacing(5),
+        backgroundColor: yellow[300],
+        textAlign: "center",     
+        padding: theme.spacing(1)
+      },
+    },
   }));

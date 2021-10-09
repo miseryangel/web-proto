@@ -13,7 +13,8 @@ export const stackGenerator = (len:number):number[][] =>{
 }
 
 export const subSort = (arr:number[],low:number,high:number):number[] =>{
+    console.log("The length of input array is",arr.length);
     const toSort = arr.slice(low,high+1), res:number[] = [];
     toSort.sort();
-    return res.concat(arr.slice(0,low-1),toSort,arr.slice(high+1,arr.length));
+    return res.concat(arr.slice(0,low),toSort,arr.slice(high+1,arr.length));
 }

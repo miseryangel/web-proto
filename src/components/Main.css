@@ -89,6 +89,13 @@
   margin: 0 1px;
   background-color:#e73922
 }
+
+.array-bar-merge{
+  width: 2px;
+  display: inline-block;
+  margin: 0 1px;
+  background-color:#50e722
+}
   /* tree */
 .tree-node{
   border-radius: 50%;

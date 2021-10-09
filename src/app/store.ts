@@ -22,6 +22,8 @@ const {
 const {
   bubbleSortingReducer,
   mergeSortingReducer,
+  quickSortingReducer,
+  radixSortingReducer,
 } = sortingReducers;
 
 const {
@@ -37,6 +39,8 @@ export const store = configureStore({
   reducer: {
     bubbleSort: bubbleSortingReducer,
     mergeSort:mergeSortingReducer,
+    quickSort: quickSortingReducer,
+    radixSort: radixSortingReducer,
     array: arrayReducer,
     queue: queueReducer,
     linkedList: linkedListReducer,
