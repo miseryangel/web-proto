@@ -9,6 +9,7 @@ import { backtrackingReducers } from '../slices/Backtracking';
 const {
   bstReducer,
   avlReducer,
+  redBlackReducer,
 } = treeReducers;
 
 
@@ -48,6 +49,7 @@ export const store = configureStore({
     heap: heapReducer,
     bst: bstReducer,
     avl: avlReducer,
+    redBlack:redBlackReducer,
     backtracking: backtrackingReducer,
     nQueen:nQueenReducer
   },

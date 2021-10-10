@@ -21,6 +21,7 @@ import {
 import {
   bstTransform,
   avlTransform,
+  redBlackTransform,
 } from '../../slices/Tree';
 import {
   heapTransform,
@@ -117,6 +118,10 @@ function Array(){
           break;
         case "Heap":
           dispatch(heapTransform(array));
+          break;
+        case "RedBlackTree":
+          dispatch(redBlackTransform(array));
+          break;
       }
       history.push(`/${trans}`);
     }
@@ -144,6 +149,7 @@ function Array(){
               <MenuItem value={"Stack"}>stack</MenuItem>
               <MenuItem value={"BST"}>BinarySearchTree</MenuItem>
               <MenuItem value={"AVLTree"}>AVLTree</MenuItem>
+              <MenuItem value={"RedBlackTree"}>RedBlackTree</MenuItem>
               <MenuItem value={"Heap"}>Heap</MenuItem>
             </Select>
         </Grid>

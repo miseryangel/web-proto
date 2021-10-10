@@ -6,11 +6,11 @@ import {
     radixResize,
     radixForward 
 } from '../../slices/Sorting';
-import { arrayStyles } from '../styles/arrayStyle';
+import { radixStyles } from '../styles/radixSortStyle';
 
 function Tiles(props:{arr:number[],index:number}){
-    const classes = arrayStyles();
-    return <Box pt= {2}><Grid container className = {classes.radix}>{props.arr.map((ele,index) =>{
+    const classes = radixStyles();
+    return <Box pt= {2}><Grid container className = {classes.root}>{props.arr.map((ele,index) =>{
         return <Paper variant="outlined" className={index===props.index?classes.active:classes.node} elevation={3}>{ele}</Paper>
     })}</Grid></Box>
 }

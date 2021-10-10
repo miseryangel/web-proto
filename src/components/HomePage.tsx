@@ -23,6 +23,7 @@ const HomePage = () =>{
           <Link href="/Queue" >Queue</Link>
           <Link href="/LinkedList" >LinkedList</Link>
           <Link href="/BST" >Binary Search Tree</Link>
+          <Link href="/RedBlackTree" >Red Black Tree</Link>
           <Link href="/AVLTree" >AVLTree</Link>
           <Link href="/Sorting/BubbleSort" >BubbleSort</Link>
           <Link href="/Sorting/MergeSort" >MergeSort</Link>

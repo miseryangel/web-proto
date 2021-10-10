@@ -17,6 +17,7 @@ import Heap from './trees/Heap';
 import Backtracking from './pathfinding/Backtracking';
 import QuickSort from './sorting/quickSort';
 import RadixSort from './sorting/radixSort';
+import RedBlack from './trees/RedBlack';
 
 
 
@@ -69,6 +70,12 @@ function Main (){
             <Route path="/AVLTree" 
                 component={() => 
                   <AVL
+                  />
+                } 
+            />
+            <Route path="/RedBlackTree" 
+                component={() => 
+                  <RedBlack
                   />
                 } 
             />

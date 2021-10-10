@@ -1,20 +1,18 @@
-import { LEFT, RIGHT, ROOT, RED, BLACK } from './bricks/symbol';
 import { BSTree, AVLTree, RedBlackTree, SegmentTree, SplayTree, TrieTree } from './bricks/tree';
-import { TreeNode, AVLNode, RedBlackNode, SegmentNode, TrieNode } from './bricks/node';
-import { randomArray } from './bricks/arrayGenerator';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { enableMapSet } from 'immer';
-import { stackTransform } from './Array';
+import { bsTreeGenerator, avlTreeGenerator, rbTreeGenerator } from './bricks/treeGenerator';
 // allow reducers to use set
 enableMapSet();
 
-
+const initialCapacity = 15;
+const {bsTree,bsTVisited} = bsTreeGenerator(initialCapacity);
  // reset tree action unimplemented and initialize function unimplemented
 const bstSlice = createSlice({
     name:"binary search tree",
     initialState:{
-        tree: new BSTree(),
-        visited: new Set<number>(),
+        tree: bsTree,
+        visited: bsTVisited,
     },
     reducers:{
         addNode:{
@@ -52,11 +50,12 @@ const bstSlice = createSlice({
 
  // reset tree action unimplemented and initialize function unimplemented
  // height limit is outsourced to react component
+const {avlTree,avlVisited} = avlTreeGenerator(initialCapacity);
 const avlSlice = createSlice({
     name:"avl tree",
     initialState:{
-        tree: new AVLTree(),
-        visited: new Set<number>(),
+        tree: avlTree,
+        visited: avlVisited,
     },
     reducers:{
         addNode:{
@@ -92,11 +91,12 @@ const avlSlice = createSlice({
     }
 })
 
+const { rbTree,rbVisited } = rbTreeGenerator(initialCapacity);
 const redBlackSlice = createSlice({
     name:"red black tree",
     initialState:{
-        tree: new RedBlackTree(),
-        visited: new Set<number>(),
+        tree: rbTree,
+        visited: rbVisited,
     },
     reducers:{
         addNode:{
@@ -114,6 +114,18 @@ const redBlackSlice = createSlice({
                 state.tree.deleteNode(action.payload);
             },
             prepare:(payload:number)=>{
+                return {payload};
+            }
+        },
+        transform:{
+            reducer:(state,action:PayloadAction<number[]>)=>{
+                state.visited = new Set<number>(action.payload);
+                state.tree = new RedBlackTree();
+                state.visited.forEach(function(val){
+                    state.tree.addNode(val);
+                })
+            },
+            prepare:(payload:number[])=>{
                 return {payload};
             }
         },
@@ -277,7 +289,14 @@ export const{
     transform:avlTransform,
 } = avlSlice.actions;
 
+export const{
+    addNode:redBlackAddNode,
+    deleteNode:redBlackDeleteNode,
+    transform:redBlackTransform,
+} = redBlackSlice.actions;
+
 export const treeReducers ={
   bstReducer: bstSlice.reducer,
-  avlReducer: avlSlice.reducer
+  avlReducer: avlSlice.reducer,
+  redBlackReducer:redBlackSlice.reducer,
 }

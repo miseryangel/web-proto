@@ -1,6 +1,7 @@
 import { makeStyles,Theme } from "@material-ui/core/styles";
 import yellow from "@material-ui/core/colors/yellow";
 import white from "@material-ui/core/colors/yellow";
+import { brown, red } from "@material-ui/core/colors";
 
 export const arrayStyles = makeStyles((theme:Theme) => ({
     root: {
@@ -44,4 +45,20 @@ export const arrayStyles = makeStyles((theme:Theme) => ({
         padding: theme.spacing(1)
       },
     },
+    red: {
+      backgroundColor: red[700],
+      borderRadius: 25,
+    },
+    redActive: {
+      backgroundColor: red[200],
+      borderRadius: 25,
+    },
+    black: {
+      backgroundColor: brown[400],
+      borderRadius: 25,
+    },
+    blackActive: {
+      backgroundColor: brown[100],
+      borderRadius: 25,
+    }
   }));

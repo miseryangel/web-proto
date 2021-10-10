@@ -389,7 +389,7 @@ export class RedBlackTree extends Tree<RedBlackNode>{
 
     private insertRotate(z:RedBlackNode){
         while (z.parent !== null && z.parent.color === RED){
-            const grandparent:RedBlackNode = z.parent.parent!, parent = z.parent, uncle:RedBlackNode|null = z.parent.color === LEFT?grandparent.right: grandparent.left;
+            const grandparent:RedBlackNode = z.parent.parent!, parent = z.parent, uncle:RedBlackNode|null = z.parent.parentSide === LEFT?grandparent.right: grandparent.left;
             if (uncle !== null && uncle.color === RED){
                 uncle.color = BLACK;
                 parent.color =BLACK;
