@@ -20,8 +20,8 @@ function Backtracking() {
     const isOver = useAppSelector(state => state.backtracking.isOver);
     const boardLen = useAppSelector(state => state.backtracking.length);
     const [on,setOn] = useState<boolean>(false);
+    const [over,setOver] = useState<boolean>(false);
     const [val,setVal] = useState<number>(0);
-    const [len,setLen] = useState<number>(boardLen);
     const stateHandler = (v:number) =>{
       setVal(v);
     }
@@ -29,19 +29,19 @@ function Backtracking() {
     useEffect(()=>{
       let interval:ReturnType<typeof setInterval>|null = null;
   
-      if (isBegun){
-        if (!isOver){
-          if (on){
-            interval = setInterval(()=>{
-              dispatch(obsforward());
-            },50);
-          }else{
-            clearInterval(interval!);
-          }
+      if (isBegun && on && !over){
+        interval = setInterval(()=>{
+          dispatch(obsforward());
+        },50);
+        if (isOver){
+          setOver(true);
+          setOn(true);
         }
+      }else{
+        clearInterval(interval!);
       }
       return () =>clearInterval(interval!);
-    },[on]);
+    },[on,over,isOver]);
   
     const playHandler = () =>{
       if (!isBegun){
@@ -55,6 +55,7 @@ function Backtracking() {
       dispatch(obsReset());
       setVal(0);
       setOn(false);
+      setOver(false);
     }
     
     const sizeHandler = (val:number) =>{
@@ -64,16 +65,35 @@ function Backtracking() {
   
   
     return (
-      <div >          
+      <Grid container spacing = {3} justify="center" alignItems="center" justifyContent="center"> 
+        <Grid item xs = {8} >
+          <Typography variant="h4">Backtracking</Typography>
           <PathFindingPlayGround board = {board} choice = {val}/>
-          <Button onClick= {() =>sizeHandler(1)} disabled = {boardLen === 12}>increase</Button>
-          <Button onClick= {() =>sizeHandler(0)} disabled = {boardLen === 2}>decrease</Button>
-          <Button onClick = {resetHandler} >reset</Button>
-          <Button onClick = {() => stateHandler(1)} disabled = {isBegun}>chooseStartPoint</Button>
-          <Button onClick = {() => stateHandler(2)} disabled = {isBegun}>chooseEndPoint</Button>
-          <Button onClick = {() => stateHandler(3)}>addObstacles</Button>
-          <Button onClick = {playHandler} >begin</Button>
-      </div>
+        </Grid>  
+        <Grid item xs = {4} alignItems="center">
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="vertical outlined button group"
+            color="primary"
+          >
+            <Button variant = "contained" onClick = {resetHandler} >refresh</Button>
+            <Button onClick= {() =>sizeHandler(1)} disabled = {boardLen === 11}>increase</Button>
+            <Button onClick= {() =>sizeHandler(0)} disabled = {boardLen === 7}>decrease</Button>
+          </ButtonGroup>
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="vertical outlined button group"
+            color="secondary"
+          >
+            <Button onClick = {() => stateHandler(1)} disabled = {isBegun}>chooseStartPoint</Button>
+            <Button onClick = {() => stateHandler(2)} disabled = {isBegun}>chooseEndPoint</Button>
+            <Button onClick = {() => stateHandler(3)} disabled = {isOver}>addObstacles</Button>
+          </ButtonGroup>
+          <Box>
+            <Button variant = "contained" color="primary" onClick = {playHandler} >begin</Button>
+          </Box>
+        </Grid>   
+      </Grid>
     );
   }
   

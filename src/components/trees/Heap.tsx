@@ -101,7 +101,7 @@ function Heap(){
                 <Grid item xs = {10} justify="center"> 
                     <Typography variant="h4">Heap</Typography>
                     <ConditionalHeapRenderer arr = {arr} />
-                    <List arr = {sorted} active = {sorted.length-1}/>
+                    {sorted.length !== 0 && <List arr = {sorted} active = {sorted.length-1}/>}
                 </Grid>
                 <Grid item xs = {10} >
                   <Button variant = "contained" className={classes.transform} onClick= {maximize}>Transform</Button>

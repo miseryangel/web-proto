@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Link, Paper } from '@material-ui/core';
+import { Typography, Grid, Link, Paper } from '@material-ui/core';
 import { useStyles } from './styles/homeStyle';
 
 
@@ -18,23 +18,49 @@ const HomePage = () =>{
       </Grid> */}
       <Grid item xs = {6}>
         <Paper className={classes.root} >
-          <Link href="/Array">Array</Link>
-          <Link href="/Stack" >Stack</Link>
-          <Link href="/Queue" >Queue</Link>
-          <Link href="/LinkedList" >LinkedList</Link>
-          <Link href="/BST" >Binary Search Tree</Link>
-          <Link href="/RedBlackTree" >Red Black Tree</Link>
-          <Link href="/AVLTree" >AVLTree</Link>
-          <Link href="/Sorting/BubbleSort" >BubbleSort</Link>
-          <Link href="/Sorting/MergeSort" >MergeSort</Link>
-          <Link href="/Sorting/QuickSort" >QuickSort</Link>
-          <Link href="/Sorting/RadixSort" >RadixSort</Link>
-          <Link href="/Heap" >Heap</Link>
-          <Link href="/Backtracking" >Backtracking</Link>
+          <Link href="/Array">
+            <Typography variant="h6">Array</Typography>
+          </Link>
+          <Link href="/Stack" >
+            <Typography variant="h6">Stack</Typography>
+          </Link>
+          <Link href="/Queue" >
+            <Typography variant="h6">Queue</Typography>
+          </Link>
+          <Link href="/LinkedList" >
+            <Typography variant="h6">LinkedList</Typography>
+          </Link>
+          <Link href="/BST" >
+            <Typography variant="h6">BinarySearchTree</Typography>
+          </Link>
+          <Link href="/RedBlackTree" >
+            <Typography variant="h6">RedBlackTree</Typography>
+          </Link>
+          <Link href="/AVLTree" >
+            <Typography variant="h6">AVLTree</Typography>
+          </Link>
+          <Link href="/Heap" >
+            <Typography variant="h6">Heap</Typography>
+          </Link>
         </Paper>
       </Grid>
       <Grid item xs = {6}>
         <Paper className={classes.root} >
+          <Link href="/Sorting/BubbleSort" >
+            <Typography variant="h6">BubbleSort</Typography>
+          </Link>
+          <Link href="/Sorting/MergeSort" >
+            <Typography variant="h6">MergeSort</Typography>
+          </Link>
+          <Link href="/Sorting/QuickSort" >
+            <Typography variant="h6">QuickSort</Typography>
+          </Link>
+          <Link href="/Sorting/RadixSort" >
+            <Typography variant="h6">RadixSort</Typography>
+          </Link>
+          <Link href="/Backtracking" >
+            <Typography variant="h6">Backtracking</Typography>
+          </Link>
         </Paper>
       </Grid>
     </Grid>
