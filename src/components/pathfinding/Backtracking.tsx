@@ -2,9 +2,6 @@ import React,{useState, useEffect } from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import { Typography, Box, Grid, Button, TextField, ButtonGroup, FormControl, Select, MenuItem } from '@material-ui/core';
 import { 
-  addObs, 
-  chooseStartPoint, 
-  chooseEndPoint, 
   begin, 
   obsforward,
   reScale,

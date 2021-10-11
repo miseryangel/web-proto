@@ -64,7 +64,7 @@ function RadixSort() {
                     return <Tiles arr = {arr} index = {on?idx:-1}/>
                 })}
             </Grid>
-            <Grid item xs = {4}>
+            <Grid container xs = {4} alignItems="center" justifyContent="center">
                 <Box pt={8}>
                     <ButtonGroup
                     orientation="vertical"
@@ -93,48 +93,55 @@ function RadixSort() {
                     aria-label="vertical outlined button group"
                     color="primary"
                     >
+                        <div className = "label-container">
+                            <TextField
+                                className="outlined-number"
+                                label="wordLength"
+                                type="number"
+                                InputLabelProps={{
+                                shrink: true,
+                                }}
+                                InputProps={{
+                                inputProps: { 
+                                    max: 15, min: 5 
+                                }
+                                }}
+                                defaultValue = {10}
+                                variant="outlined"
+                                size="small"
+                                onChange={(e)=>{
+                                const newWordLen = +e.target.value;
+                                setWordLen(newWordLen);
+                                }}
+                            />
+                        </div>
+                        <div className = "label-container">
+                            <Box pt = {1}> 
+                                <TextField
+                                    className="outlined-number"
+                                    label="Length"
+                                    type="number"
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                    InputProps={{
+                                    inputProps: { 
+                                        max: 8, min: 5 
+                                    }
+                                    }}
+                                    defaultValue = {8}
+                                    variant="outlined"
+                                    size="small"
+                                    onChange={(e)=>{
+                                    const newLen = +e.target.value;
+                                    console.log(newLen);
+                                    setLen(newLen);
+                                    }}
+                                />
+                            </Box>
+                            
+                        </div>
                         
-                        <TextField
-                            className="outlined-number"
-                            label="wordLength"
-                            type="number"
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            InputProps={{
-                            inputProps: { 
-                                max: 15, min: 5 
-                            }
-                            }}
-                            defaultValue = {10}
-                            variant="outlined"
-                            size="small"
-                            onChange={(e)=>{
-                            const newWordLen = +e.target.value;
-                            setWordLen(newWordLen);
-                            }}
-                        />
-                        <TextField
-                            className="outlined-number"
-                            label="Length"
-                            type="number"
-                            InputLabelProps={{
-                            shrink: true,
-                            }}
-                            InputProps={{
-                            inputProps: { 
-                                max: 8, min: 5 
-                            }
-                            }}
-                            defaultValue = {8}
-                            variant="outlined"
-                            size="small"
-                            onChange={(e)=>{
-                            const newLen = +e.target.value;
-                            console.log(newLen);
-                            setLen(newLen);
-                            }}
-                        />
 
                         <Slider
                         aria-label="Speed"
@@ -151,9 +158,7 @@ function RadixSort() {
                         {visible && <Typography color="secondary" variant="h6">{msg}</Typography>}
                     </ButtonGroup>
                 </Box>
-            
             </Grid>
-            
         </Grid>
     );
 }

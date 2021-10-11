@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { 
   addObs, 
   chooseStartPoint, 
@@ -11,9 +11,14 @@ import { pathFindingStyles } from '../styles/pathFindingStyle';
 export const PathFindingPlayGround = (props:{board:number[][]; choice:number}) =>{
     const classes = pathFindingStyles();
     const dispatch = useAppDispatch();
+    const path = useAppSelector(state => state.backtracking.path);
+    const pathMap = Object.fromEntries(
+      path.map(({r,c,d})=>[r+"$"+c,d])
+    );
+    console.log(pathMap);
     const changeHandler = (coord:{r:number,c:number}) =>{
-    console.log(props.choice);
-    switch(props.choice){
+      console.log(props.choice);
+      switch(props.choice){
         case 1:
           dispatch(chooseStartPoint(coord));
           break;
@@ -30,8 +35,9 @@ export const PathFindingPlayGround = (props:{board:number[][]; choice:number}) =
     for (let i = 0; i < props.board.length; i++){
       let row = [];
       for (let j = 0; j < props.board[0].length; j++){
-        const curCoord = { r:i , c:j };
-        row.push(<Tile coord = {curCoord} val = {props.board[i][j]} onChange = {changeHandler}/>);
+        const curCoord = { r:i , c:j }, key = curCoord.r+"$"+curCoord.c, dir = (key in pathMap)?pathMap[key]:-1;
+        console.log(dir);
+        row.push(<Tile coord = {curCoord} val = {props.board[i][j]} dir = {dir} onChange = {changeHandler}/>);
       }
       tiles.push(<Grid container  alignItems="center" justifyContent="center">
                     <div className={classes.root}>
