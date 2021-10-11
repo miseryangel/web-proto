@@ -1,8 +1,7 @@
 import { makeStyles,Theme } from "@material-ui/core/styles";
-import yellow from "@material-ui/core/colors/yellow";
-import { brown, blue, green, red, purple } from "@material-ui/core/colors";
+import { yellow, green, red, purple } from "@material-ui/core/colors";
 
-export const pathFindingStyles = makeStyles((theme:Theme) => ({
+export const nQueenStyles = makeStyles((theme:Theme) => ({
     root: {
       display: "flex",
       flexWrap: "wrap",
@@ -11,33 +10,29 @@ export const pathFindingStyles = makeStyles((theme:Theme) => ({
         margin: theme.spacing(0.1),
         width: theme.spacing(5),
         height: theme.spacing(5),
-        backgroundColor: yellow[300],
         textAlign: "center",     
         padding: theme.spacing(1)
       },
     },
-    blank :{
-        backgroundColor:blue[700],
+    even :{
+        backgroundColor:yellow[100],
     },
-    visited:{
-        backgroundColor:green[700],
+    odd:{
+        backgroundColor:green[300],
     },
-    start:{
+    chosen:{
         backgroundColor:red[200],
     },
-    end:{
+    queen:{
         backgroundColor:purple[200],
-    },
-    obstacle:{
-        backgroundColor:brown[500],
-    },
-    path:{
-        backgroundColor: yellow[200],
     },
     imageIcon: {
         height: '100%',
     },
     iconRoot: {
         textAlign: 'center',
-    }
+    },
+    marginAutoItem: {
+        margin: 'auto'
+    },
 }));

@@ -18,6 +18,7 @@ import Backtracking from './pathfinding/Backtracking';
 import QuickSort from './sorting/quickSort';
 import RadixSort from './sorting/radixSort';
 import RedBlack from './trees/RedBlack';
+import NQueen from './various/NQUEEN';
 
 
 
@@ -112,6 +113,12 @@ function Main (){
             <Route path="/Backtracking" 
                 component={() => 
                   <Backtracking
+                  />
+                } 
+            />
+            <Route path="/NQueen" 
+                component={() => 
+                  <NQueen
                   />
                 } 
             />
