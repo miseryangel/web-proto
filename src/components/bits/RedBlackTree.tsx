@@ -34,16 +34,21 @@ const DFS = (props:{node:RedBlackNode|null,active:number,posHandler:(coord:{x:nu
         setRendered(true);
         if (props.node === null){
             props.posHandler({x:-1,y:-1});
+            setRendered(false);
         }else{
             props.posHandler({x:position.x,y:position.y});
             if (props.node.left !== null){
                 setLeft(true);
+            }else{
+                setLeft(false);
             }
             if (props.node.right !== null){
                 setRight(true);
+            }else{
+                setRight(false);
             }
         }
-    },[rendered,props.node]);
+    },[rendered,props.node,left,right]);
 
     useEffect(() =>{
         const cur = nodeRef.current as any;
@@ -73,7 +78,7 @@ const DFS = (props:{node:RedBlackNode|null,active:number,posHandler:(coord:{x:nu
             //             .attr("x2",rc.x)
             //             .attr("y2",rc.y);
         }
-    } ,[rendered]);
+    } ,[rendered,left,right]);
 
     if (props.node === null) return <Card ref = {nodeRef}></Card>;
     let redblack;
@@ -86,9 +91,9 @@ const DFS = (props:{node:RedBlackNode|null,active:number,posHandler:(coord:{x:nu
     return (
         <Grid container justify="center">
             <div className = {classes.root}>
-                {left && <Line ax = {lc.x} ay = {lc.y} bx = {cc.x} by = {cc.y} dir = {0} />}
+                {left && <Line ax = {lc.x} ay = {lc.y+16} bx = {cc.x} by = {cc.y+16} dir = {0} />}
                 <Paper ref = {nodeRef}  className = {redblack}>{props.node.val}</Paper>
-                {right && <Line ax = {cc.x} ay = {cc.y} bx = {rc.x} by = {rc.y} dir = {1} />}
+                {right && <Line ax = {cc.x} ay = {cc.y+16} bx = {rc.x} by = {rc.y+16} dir = {1} />}
             </div>
             <Grid container justify="center">
                 <Grid item xs = {6}>
@@ -102,14 +107,14 @@ const DFS = (props:{node:RedBlackNode|null,active:number,posHandler:(coord:{x:nu
     )
 }
 
-export const RBTree = (props:{root:RedBlackNode,active:number}) =>{
+export const RBTree = (props:{root:RedBlackNode,active:number,arr:number[]}) =>{
     const [coord,setCoord] = useState({x:-1,y:-1});
     const posHandler = (coords:{x:number,y:number}) =>{
         setCoord(coords);
     }
     useEffect(() =>{
         console.log("maybe it doesn't work",coord);
-    },[]);
+    },[props.arr]);
     return (
         <Box pt = {5} pb={2} width = "94.6%">
             <DFS node = {props.root} active = {props.active} posHandler = {posHandler} />

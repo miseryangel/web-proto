@@ -12,7 +12,7 @@ export const Line = (props:{ax:number, ay:number, bx:number, by:number,dir:numbe
         width:"2px",
         backgroundColor:"green",
         position:"absolute",
-        top:`${props.by+12.5}px`,
+        top:`${props.by}px`,
         left:`${props.bx}px`,
         transform:`rotate(${90-calc}deg)`,
         transformOrigin:`${0}px ${0}px`,

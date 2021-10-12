@@ -9,7 +9,7 @@ import {
 } from '../../slices/Tree';
 import { traverseHelper } from '../bits/TraverseHelper';
 
-function ConditionalTreeRenderer(props:{root:RedBlackNode | null, active:number}){
+function ConditionalTreeRenderer(props:{root:RedBlackNode | null, active:number, arr:number[]}){
     if (props.root === null){
       return (
         <Box pt = {5} pb={2} >
@@ -17,7 +17,7 @@ function ConditionalTreeRenderer(props:{root:RedBlackNode | null, active:number}
         </Box>
         )
     }else{
-      return <RBTree root = {props.root} active = {props.active}/>
+      return <RBTree root = {props.root} active = {props.active} arr = {props.arr}/>
     }
   }  
 
@@ -77,7 +77,7 @@ const RedBlack = () =>{
             <Grid container spacing = {3} justify="center">
                 <Grid item xs = {8} justify="center"> 
                     <Typography variant="h4">Red Black Tree</Typography>
-                    <ConditionalTreeRenderer root = {root} active = {idx >= traverse.length?-1e4:traverse[idx]} />
+                    <ConditionalTreeRenderer root = {root} active = {idx >= traverse.length?-1e4:traverse[idx]} arr = {traverse}/>
                 </Grid>
                 <Grid item xs = {3}>
                     <ButtonGroup

@@ -7,7 +7,6 @@ export const redBlackStyles = makeStyles((theme:Theme) => ({
       display: "flex",
       flexWrap: "wrap",
       "& > *": {
-        margin: theme.spacing(0.1),
         width: theme.spacing(4),
         height: theme.spacing(4),
         borderRadius: 25,
@@ -18,15 +17,27 @@ export const redBlackStyles = makeStyles((theme:Theme) => ({
       },
     },
     red: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      borderRadius: 25,
       backgroundColor: red[700],
     },
     redActive: {
       backgroundColor: red[200],
+      width: theme.spacing(4.5),
+      height: theme.spacing(4.5),
+      borderRadius: 25,
     },
     black: {
       backgroundColor: brown[400],
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      borderRadius: 25,
     },
     blackActive: {
       backgroundColor: brown[100],
+      width: theme.spacing(4.5),
+      height: theme.spacing(4.5),
+      borderRadius: 25,
     }
   }));

@@ -102,7 +102,7 @@ function LinkedList(){
     return (
       <Grid  container spacing={3} justify="center">
         <Grid item xs = {10}>
-          <Typography variant="h4">LinkedList(Deque)</Typography>
+          <Typography variant="h5">LinkedList(Deque)</Typography>
           <ConditionalLLRenderer arr = {linkedList} active = {active} />
         </Grid>
 
