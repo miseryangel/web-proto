@@ -1,24 +1,30 @@
 import React from 'react';
-import { Paper, Box } from '@material-ui/core';
+import { Paper, Grid, Box } from '@material-ui/core';
 import { linkedListStyles } from '../styles/linkedListStyle';
+import link from '../../assets/arrowForLinkedList.svg';
 
 export const LList = (props:{arr:number[],active:number}) =>{
     const classes = linkedListStyles();
     const arr = props.arr.map((val,index)=>{
-        if (index === props.active){
-            return (
-                <Paper color="#ff6600" variant="outlined" className = {classes.active} elevation={24}>{val}</Paper>
-            );
-        }
-      return (
-        <Paper variant="outlined" className = {classes.customBorderRadius} elevation={3}>{val}</Paper>
-      );
+        return (
+                <div className = {classes.root}>
+                    <Paper variant="outlined" 
+                        className = {
+                            index === props.active?classes.active:classes.node
+                        } elevation={3}>
+                        {val}
+                    </Paper>
+                    {index !== props.arr.length - 1 && <img src = {link} alt = "link"/>}
+                </div>
+                )
+                
     });
     return (
-        <Box p = {10} pt ={5} width = "94.6%" >
-            <div className={classes.root}>
+        <Box pt = {5} pb={2} width = "94.6%" >
+            <Grid container >
                 {arr}
-            </div>
+            </Grid>
         </Box>
+        
     );
 }

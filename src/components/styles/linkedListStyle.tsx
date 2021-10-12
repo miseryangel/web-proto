@@ -5,20 +5,20 @@ export const linkedListStyles = makeStyles((theme:Theme) => createStyles({
     root: {
       display: "flex",
       flexWrap: "wrap",
-      outline:"2px solid black",
       "& > *": {
-        margin: theme.spacing(0.1),
-        width: theme.spacing(5),
-        height: theme.spacing(5),
-        backgroundColor: yellow[300],
-        textAlign: "center",     
-        padding: theme.spacing(1)
       }
     },
-    customBorderRadius: {
-      borderRadius: 25
+    node:{
+      backgroundColor: yellow[100],
+      borderRadius: 25,
+      width:theme.spacing(3),
+      height:theme.spacing(3),
     },
     active:{
+      width: theme.spacing(3.5),
+      height: theme.spacing(3.5),
+      borderRadius: 25,
       backgroundColor: yellow[700],
+      textAlign: "center",     
     }
   }));
