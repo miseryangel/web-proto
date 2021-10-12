@@ -19,6 +19,7 @@ import QuickSort from './sorting/quickSort';
 import RadixSort from './sorting/radixSort';
 import RedBlack from './trees/RedBlack';
 import NQueen from './various/NQUEEN';
+import BFS from './pathfinding/BFS';
 
 
 
@@ -113,6 +114,12 @@ function Main (){
             <Route path="/Backtracking" 
                 component={() => 
                   <Backtracking
+                  />
+                } 
+            />
+            <Route path="/BFS" 
+                component={() => 
+                  <BFS
                   />
                 } 
             />

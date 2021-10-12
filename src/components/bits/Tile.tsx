@@ -37,15 +37,15 @@ function Tile(props:{
 
     switch(props.val){
         case -1:
-            return <Paper className = {classes.blank} id = {currentId} >{val}</Paper>
+            return <Paper className = {classes.blank} id = {currentId} ></Paper>
         case 0:
-            return <Paper className = {classes.start} id = {currentId} >{val}</Paper>
+            return <Paper className = {classes.start} id = {currentId} ></Paper>
         case 1:
-            return <Paper className = {classes.end} id = {currentId} >{val}</Paper>
+            return <Paper className = {classes.end} id = {currentId} ></Paper>
         case 2:
-            return <Paper className = {classes.obstacle} id = {currentId} >{val}</Paper>
+            return <Paper className = {classes.obstacle} id = {currentId} ></Paper>
         case 3:
-          return <Paper className = {classes.visited} id = {currentId} >{val}</Paper>
+          return <Paper className = {classes.visited} id = {currentId} ></Paper>
         default:
             switch(props.dir){
                 case 1:
@@ -60,10 +60,12 @@ function Tile(props:{
                     return <Paper className = {classes.path} id = {currentId} >
                                 <img src = {backward} alt = "backward"/>
                            </Paper>
-                default:
+                case 4:
                     return <Paper className = {classes.path} id = {currentId} >
                                 <img src = {north} alt = "north"/>
                            </Paper>
+                default:
+                    return <Paper className = {classes.path} id = {currentId} ></Paper>
             }
     }
 }

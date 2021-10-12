@@ -7,7 +7,7 @@ import {
   reScale,
   obsReset 
 } from '../../slices/Backtracking';
-import { PathFindingPlayGround } from '../bits/PathFindingPlayGround';
+import { BTPlayGround } from '../bits/BTPlayGround';
 
 function Backtracking() {
     const dispatch = useAppDispatch();
@@ -64,8 +64,8 @@ function Backtracking() {
     return (
       <Grid container spacing = {3} justify="center" alignItems="center" justifyContent="center"> 
         <Grid item xs = {8} >
-          <Typography variant="h4">Backtracking</Typography>
-          <PathFindingPlayGround board = {board} choice = {val}/>
+          <Typography variant="h4">Backtracking(DFS)</Typography>
+          <BTPlayGround board = {board} choice = {val}/>
         </Grid>  
         <Grid item xs = {4} alignItems="center">
           <ButtonGroup

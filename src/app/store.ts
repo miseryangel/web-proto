@@ -5,6 +5,7 @@ import { arrayReducers } from '../slices/Array';
 import { treeReducers } from '../slices/Tree';
 import { heapReducers } from '../slices/Heap';
 import { backtrackingReducers } from '../slices/Backtracking';
+import { pathFindingReducers } from '../slices/PathFinding';
 
 const {
   bstReducer,
@@ -36,6 +37,10 @@ const {
   nQueenReducer,
 } = backtrackingReducers;
 
+const {
+  bfsReducer,
+} = pathFindingReducers
+
 export const store = configureStore({
   reducer: {
     bubbleSort: bubbleSortingReducer,
@@ -51,7 +56,8 @@ export const store = configureStore({
     avl: avlReducer,
     redBlack:redBlackReducer,
     backtracking: backtrackingReducer,
-    nQueen:nQueenReducer
+    nQueen:nQueenReducer,
+    bfs:bfsReducer,
   },
   middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

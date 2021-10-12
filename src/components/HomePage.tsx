@@ -61,6 +61,9 @@ const HomePage = () =>{
           <Link href="/Backtracking" >
             <Typography variant="h6">Backtracking</Typography>
           </Link>
+          <Link href="/BFS" >
+            <Typography variant="h6">BFS</Typography>
+          </Link>
           <Link href="/NQueen" >
             <Typography variant="h6">NQueen</Typography>
           </Link>

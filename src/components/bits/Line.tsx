@@ -6,9 +6,10 @@ import { Canvas } from '@react-three/fiber';
 
 const Line = (props:{width:number,height:number,choice:number}) =>{
     return (
-        <svg viewBox="50 50 50 50">
-  <ellipse cx="50" cy="50" rx="50" ry="50"></ellipse>
-</svg>
+        <svg width={`${props.width}px`} height={`${props.height}px`} viewBox={`0 0 ${props.width} ${props.height}`}
+        xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="0" x2="50" y2="20" stroke-width={5} stroke='black'/>
+        </svg>
     );
 }
 

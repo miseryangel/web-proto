@@ -8,7 +8,7 @@ import { Grid } from '@material-ui/core';
 import Tile from './Tile';
 import { pathFindingStyles } from '../styles/pathFindingStyle';
 
-export const PathFindingPlayGround = (props:{board:number[][]; choice:number}) =>{
+export const BTPlayGround = (props:{board:number[][]; choice:number}) =>{
     const classes = pathFindingStyles();
     const dispatch = useAppDispatch();
     const path = useAppSelector(state => state.backtracking.path);
